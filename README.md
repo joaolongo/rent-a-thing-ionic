@@ -1,0 +1,1 @@
+### POC destinada à criação da um APP que realizará a a chamada da API do projeto tcc-jec / rent-a-thing-poc
