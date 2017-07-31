@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AuthService } from '../home/authservice'
+import { AuthService } from "../../services/authservice";
 
 @Component({
     templateUrl: './station.html',

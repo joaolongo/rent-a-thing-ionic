@@ -11,7 +11,7 @@ export class AuthService {
         return [[Http]];
     }
 
-    constructor(http, navcontroller) {
+    constructor(http: Http) {
         this.http = http;
         this.isLoggedin = false;
 
