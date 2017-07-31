@@ -1,20 +1,21 @@
-﻿import { NavController } from 'ionic-angular';
-import { Injectable, Inject } from '@angular/core';
+﻿import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 @Injectable()
 export class AuthService {
     isLoggedin: boolean;
-    nav: NavController;
     http: Http;
+    api_url: string;
+
     static get parameters() {
-        return [[Http], [NavController]];
+        return [[Http]];
     }
 
     constructor(http, navcontroller) {
         this.http = http;
-        this.nav = navcontroller;
         this.isLoggedin = false;
+
+        this.api_url = 'http://127.0.0.1:8087/'
     }
 
     login(user) {
@@ -23,11 +24,13 @@ export class AuthService {
         headers.append('Content-Type', 'application/json');
 
         return new Promise(resolve => {
-            this.http.post('http://192.168.0.107:8087/account/login', creds, { headers: headers }).subscribe(data => {
+            this.http.post(this.api_url + 'account/login', creds, { headers: headers }).subscribe(data => {
                 if (data.ok) {
-                    window.localStorage.setItem('raja', data.json().token);
+                    window.localStorage.setItem('api-key', data.json().token);
                     this.isLoggedin = true;
                 } resolve(this.isLoggedin);
+            }, err => {
+                    
             });
         });
     }
@@ -38,9 +41,11 @@ export class AuthService {
 
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
-            this.http.post('http://192.168.0.107:8087/core/api/users/', creds, { headers: headers })
+            this.http.post(this.api_url + 'core/api/users/', creds, { headers: headers })
                 .subscribe(data => {
                     resolve(data.ok);
+                }, err => {
+
                 });
         });
     }
