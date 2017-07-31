@@ -17,8 +17,7 @@ export class HomePage {
         return [[AuthService], [NavController]];
     }
 
-    /*public navCtrl: NavController*/
-    constructor(authservice, navcontroller) {
+    constructor(authservice: AuthService, navcontroller: NavController) {
         this.authservice = authservice;
         this.nav = navcontroller;
 

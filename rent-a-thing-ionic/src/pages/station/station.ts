@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../home/authservice'
 
 @Component({
-    templateUrl: './stations.html',
+    templateUrl: './station.html',
     providers: [AuthService]
 })
-export class StationsPage {
+export class StationPage {
         nav: NavController;
         authservice: AuthService;
 
     static get parameters() {
-        return [[AuthService], [NavController]];
+        return [[AuthService], [NavController], [NavParams]];
     }
 
-    constructor(authservice: AuthService, navcontroller: NavController) {
+    constructor(authservice: AuthService, navcontroller: NavController, navParams: NavParams) {
         this.authservice = authservice;
         this.nav = navcontroller;
     }
