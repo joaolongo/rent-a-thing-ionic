@@ -37,6 +37,13 @@ export class StationService {
     }
 
     getStation(id) {
-
+        return new Promise(resolve => {
+            this.http.get(this.api_url + 'serve/api/clients/' + id, { headers: this.headers })
+                .subscribe(data => {
+                    if (data.ok)
+                        resolve(data.json());
+                }, err => {
+                });
+        })
     }
 }
