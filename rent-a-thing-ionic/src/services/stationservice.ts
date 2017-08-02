@@ -16,7 +16,6 @@ export class StationService {
         this.http = http;
         this.apikey = window.localStorage.getItem('api-key');
 
-        //this.api_url = 'http://127.0.0.1:8087/'
         this.api_url = 'http://192.168.0.107:8087/';
 
         this.headers = new Headers();
