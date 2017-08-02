@@ -1,40 +1,40 @@
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
+﻿<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>
-            Estações
-        </ion-title>
-    </ion-navbar>
+    <ion-title>
+      Estações
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-list>
+  <ion-list>
 
-        <ng-container *ngFor="let station of stations">
-            <ion-card>
+    <ng-container *ngFor="let station of stations">
+      <ion-card>
 
-                <img src="https://ionicframework.com/dist/preview-app/www/assets/img/advance-card-map-madison.png">
-                <ion-item>
-                    <h1>{{station.description}}</h1>
-                </ion-item>
+        <img src="https://ionicframework.com/dist/preview-app/www/assets/img/advance-card-map-madison.png">
+        <ion-item>
+          <h1>{{station.description}}</h1>
+        </ion-item>
 
-                <ion-item>
-                    <ion-icon name="pin" item-start large></ion-icon>
-                    <p>{{station.address}}</p>
-                </ion-item>
+        <ion-item>
+          <ion-icon name="pin" item-start large></ion-icon>
+          <p>{{station.address}}</p>
+        </ion-item>
 
-                <ion-item>
-                    <span item-left>3 min</span>
-                    <span item-left>(260 m)</span>
-                    <button ion-button icon-left clear item-end>
+        <ion-item>
+          <span item-left>3 min</span>
+          <span item-left>(260 m)</span>
+          <button ion-button icon-left clear item-end (click)="select(p.id)">
             <ion-icon name="card"></ion-icon>
-                Alugar
-            </button>
-                </ion-item>
+            Alugar
+          </button>
+        </ion-item>
 
-            </ion-card>
-        </ng-container>
-    </ion-list>
+      </ion-card>
+    </ng-container>
+  </ion-list>
 </ion-content>
