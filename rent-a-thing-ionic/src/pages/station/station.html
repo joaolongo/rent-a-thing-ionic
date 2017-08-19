@@ -1,0 +1,27 @@
+﻿<ion-header>
+  <ion-navbar>
+    <ng-container *ngIf="dataLoaded">
+      <ion-title>Estação {{station.description}}</ion-title>
+    </ng-container>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="dataLoaded">
+    <ion-list radio-group>
+      <ion-item *ngFor="let rental_object of station.rental_objects">
+        <ion-label>{{rental_object.id}}</ion-label>
+        <ion-radio value="{{rental_object.id}}"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button (click)="logout()" ion-button full>
+      <ion-label>Alugar</ion-label>
+      <ion-icon name="arrow-round-forward"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-footer>

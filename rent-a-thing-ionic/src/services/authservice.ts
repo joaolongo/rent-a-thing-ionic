@@ -1,46 +1,52 @@
-﻿import { NavController } from 'ionic-angular';
-import { Injectable, Inject } from '@angular/core';
+﻿import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { UserCreds } from "../models/usercreds";
 
 @Injectable()
 export class AuthService {
     isLoggedin: boolean;
-    nav: NavController;
     http: Http;
+    api_url: string;
+
     static get parameters() {
-        return [[Http], [NavController]];
+        return [[Http]];
     }
 
-    constructor(http, navcontroller) {
+    constructor(http: Http) {
         this.http = http;
-        this.nav = navcontroller;
         this.isLoggedin = false;
+
+        this.api_url = 'http://localhost:8087/';
     }
 
-    login(user) {
+    login(user: UserCreds) {
         var headers = new Headers();
         var creds = JSON.stringify(user);
         headers.append('Content-Type', 'application/json');
 
         return new Promise(resolve => {
-            this.http.post('http://192.168.0.107:8087/account/login', creds, { headers: headers }).subscribe(data => {
+            this.http.post(this.api_url + 'account/login/', creds, { headers: headers }).subscribe(data => {
                 if (data.ok) {
-                    window.localStorage.setItem('raja', data.json().token);
+                    window.localStorage.setItem('api-key', data.json().token);
                     this.isLoggedin = true;
                 } resolve(this.isLoggedin);
+            }, err => {
+                    
             });
         });
     }
 
-    register(user) {
+    register(user: UserCreds) {
         return new Promise(resolve => {
             var creds = JSON.stringify(user);
 
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
-            this.http.post('http://192.168.0.107:8087/core/api/users/', creds, { headers: headers })
+            this.http.post(this.api_url + 'core/api/users/', creds, { headers: headers })
                 .subscribe(data => {
                     resolve(data.ok);
+                }, err => {
+
                 });
         });
     }

@@ -1,14 +1,15 @@
 ﻿import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { AuthService } from '../home/authservice';
+import { AuthService } from "../../services/authservice";
 import { HomePage } from '../home/home';
+import { UserCreds } from "../../models/usercreds";
 
 @Component({
     templateUrl: './signuppage.html',
     providers: [AuthService]
 })
 export class SignupPage {
-    newcreds: { username: string; password: string; email: string; };
+    newcreds: UserCreds;
     nav: NavController;
     authservice: AuthService;
 
@@ -16,11 +17,11 @@ export class SignupPage {
         return [[AuthService], [NavController]];
     }
 
-    constructor(authservice, navcontroller) {
+    constructor(authservice: AuthService, navcontroller: NavController) {
         this.authservice = authservice;
         this.nav = navcontroller;
 
-        this.newcreds = {username: '', password: '', email: ''};
+        this.newcreds = new UserCreds('', '', '');
     }
 
     register(newcreds) {

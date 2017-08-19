@@ -1,15 +1,16 @@
 ﻿import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AuthService } from './authservice'
+import { AuthService } from "../../services/authservice";
 import { UserPage } from '../userpage/userpage'
 import { SignupPage } from '../signuppage/signuppage'
+import { UserCreds } from "../../models/usercreds";
 
 @Component({
     templateUrl: './home.html',
     providers: [AuthService]
 })
 export class HomePage {
-        usercreds: { username: string; password: string; };
+        usercreds: UserCreds;
         nav: NavController;
         authservice: AuthService;
 
@@ -17,12 +18,11 @@ export class HomePage {
         return [[AuthService], [NavController]];
     }
 
-    /*public navCtrl: NavController*/
-    constructor(authservice, navcontroller) {
+    constructor(authservice: AuthService, navcontroller: NavController) {
         this.authservice = authservice;
         this.nav = navcontroller;
 
-        this.usercreds = { username: '', password: '' };
+        this.usercreds = new UserCreds('','','');
     }
 
     login(usercreds) {

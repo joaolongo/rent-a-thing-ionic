@@ -1,7 +1,7 @@
 ﻿import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { AuthService } from '../home/authservice';
 import { HomePage } from '../home/home';
+import { AuthService } from "../../services/authservice";
 
 @Component({
     templateUrl: './userpage.html',
@@ -16,7 +16,7 @@ export class UserPage {
         return [[AuthService], [NavController]];
     }
 
-    constructor(dataservice, navcontroller) {
+    constructor(dataservice: AuthService, navcontroller: NavController) {
         this.service = dataservice;
         this.nav = navcontroller;
     }

@@ -3,25 +3,37 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
+import { UserPage } from '../pages/userpage/userpage';
+import { StationsPage } from '../pages/stations/stations';
+import { AuthService } from "../services/authservice";
+import { AddCreditsPage } from "../pages/addcredits/addcredits";
 
 
 @Component({
-    templateUrl: 'app.html'
+    templateUrl: 'app.html',
+    providers: [AuthService]
 })
 export class MyApp {
+
     @ViewChild(Nav) nav: Nav;
 
-    rootPage: any = HomePage;
+    authservice: AuthService;
+    rootPage: any;
+    loginpage = HomePage;
+    pages: Array<{ title: string, component: any }> = [];
 
-    pages: Array<{ title: string, component: any }>;
-
-    constructor(public platform: Platform) {
+    constructor(public platform: Platform, authservice: AuthService) {
         this.initializeApp();
+        this.authservice = authservice;
 
-        // used for an example of ngFor and navigation
-        this.pages = [
-            { title: 'HomePage', component: HomePage }
-        ];
+        this.pages.push({ title: 'Perfil', component: UserPage });
+        this.pages.push({ title: 'Estações', component: StationsPage });
+        this.pages.push({ title: 'Adicionar créditos', component: AddCreditsPage })
+
+        if (this.isLoggedin())
+            this.rootPage = UserPage;
+        else
+            this.rootPage = HomePage;
     }
 
     initializeApp() {
@@ -34,8 +46,15 @@ export class MyApp {
     }
 
     openPage(page) {
-        // Reset the content nav to have just this page
-        // we wouldn't want the back button to show in this scenario
-        this.nav.setRoot(page.component);
+        this.nav.setRoot(page);
+    }
+
+    isLoggedin(): boolean {
+        return window.localStorage.getItem('api-key') !== null;
+    }
+
+    logout() {
+        this.authservice.logout();
+        this.openPage(HomePage);
     }
 }
