@@ -1,21 +1,30 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { AuthService } from "../../services/authservice";
+﻿import { StationService } from "../../services/stationservice";
+import { NavController, NavParams } from "ionic-angular";
+import { Station } from "../../models/station";
+import { StationMapper } from "../../mappers/stationmapper";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
     templateUrl: './station.html',
-    providers: [AuthService]
+    providers: [StationService]
 })
-export class StationPage {
-        nav: NavController;
-        authservice: AuthService;
+export class StationPage implements OnInit {
+    navParams: NavParams;
+    nav: NavController;
+    stationService: StationService;
+    station: Station;
+    dataLoaded: Boolean = false;
 
-    static get parameters() {
-        return [[AuthService], [NavController], [NavParams]];
+    ngOnInit(): void {
+        this.stationService.getStation(this.navParams.get('stationId')).then(data => {
+            this.station = StationMapper.map(data, true);
+            this.dataLoaded = true;
+        })
     }
 
-    constructor(authservice: AuthService, navcontroller: NavController, navParams: NavParams) {
-        this.authservice = authservice;
+    constructor(stationService: StationService, navcontroller: NavController, navParams: NavParams) {
+        this.stationService = stationService;
         this.nav = navcontroller;
+        this.navParams = navParams;
     }
 }

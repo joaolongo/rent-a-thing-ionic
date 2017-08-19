@@ -1,25 +1,26 @@
 ﻿<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
+  <ion-navbar>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>
-            Login
-        </ion-title>
-    </ion-navbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-list>
-        <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input [(ngModel)]="usercreds.username" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input [(ngModel)]="usercreds.password" type="password"></ion-input>
-        </ion-item>
-    </ion-list>
-    <button (click)="login(usercreds)" ion-button>Signin</button>
-    <button (click)="register()" ion-button>Signup</button>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input [(ngModel)]="usercreds.username" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [(ngModel)]="usercreds.password" type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button (click)="login(usercreds)" ion-button full>Entrar</button>
+  <br />
+  <button (click)="register()" color="light" ion-button full>Cadastre-se</button>
 </ion-content>

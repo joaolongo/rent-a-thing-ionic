@@ -1,5 +1,6 @@
 ﻿import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { UserCreds } from "../models/usercreds";
 
 @Injectable()
 export class AuthService {
@@ -15,16 +16,16 @@ export class AuthService {
         this.http = http;
         this.isLoggedin = false;
 
-        this.api_url = 'http://127.0.0.1:8087/'
+        this.api_url = 'http://localhost:8087/';
     }
 
-    login(user) {
+    login(user: UserCreds) {
         var headers = new Headers();
         var creds = JSON.stringify(user);
         headers.append('Content-Type', 'application/json');
 
         return new Promise(resolve => {
-            this.http.post(this.api_url + 'account/login', creds, { headers: headers }).subscribe(data => {
+            this.http.post(this.api_url + 'account/login/', creds, { headers: headers }).subscribe(data => {
                 if (data.ok) {
                     window.localStorage.setItem('api-key', data.json().token);
                     this.isLoggedin = true;
@@ -35,7 +36,7 @@ export class AuthService {
         });
     }
 
-    register(user) {
+    register(user: UserCreds) {
         return new Promise(resolve => {
             var creds = JSON.stringify(user);
 

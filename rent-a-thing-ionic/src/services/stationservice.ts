@@ -1,5 +1,7 @@
 ﻿import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Station } from "../models/station";
+import { RentalObject } from "../models/rentalobject";
 
 @Injectable()
 export class StationService {
@@ -16,7 +18,7 @@ export class StationService {
         this.http = http;
         this.apikey = window.localStorage.getItem('api-key');
 
-        this.api_url = 'http://192.168.0.107:8087/';
+        this.api_url = 'http://localhost:8087/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
@@ -25,7 +27,7 @@ export class StationService {
 
     getStations() {
         return new Promise(resolve => {
-            this.http.get(this.api_url + 'server/api/clients', { headers: this.headers })
+            this.http.get(this.api_url + 'server/api/clients/', { headers: this.headers })
                 .subscribe(data => {
                     if (data.ok) {
                         resolve(data.json());
@@ -37,12 +39,13 @@ export class StationService {
 
     getStation(id) {
         return new Promise(resolve => {
-            this.http.get(this.api_url + 'serve/api/clients/' + id, { headers: this.headers })
+            this.http.get(this.api_url + 'server/api/clients/' + id + '/', { headers: this.headers })
                 .subscribe(data => {
-                    if (data.ok)
+                    if (data.ok) {
                         resolve(data.json());
+                    }
                 }, err => {
                 });
-        })
+        });
     }
 }

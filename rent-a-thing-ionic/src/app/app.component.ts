@@ -3,9 +3,10 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
-import { UserPage} from '../pages/userpage/userpage';
+import { UserPage } from '../pages/userpage/userpage';
 import { StationsPage } from '../pages/stations/stations';
 import { AuthService } from "../services/authservice";
+import { AddCreditsPage } from "../pages/addcredits/addcredits";
 
 
 @Component({
@@ -13,7 +14,7 @@ import { AuthService } from "../services/authservice";
     providers: [AuthService]
 })
 export class MyApp {
-    
+
     @ViewChild(Nav) nav: Nav;
 
     authservice: AuthService;
@@ -25,12 +26,12 @@ export class MyApp {
         this.initializeApp();
         this.authservice = authservice;
 
-        this.pages.push({title: 'Perfil', component: UserPage});
-        this.pages.push({title: 'Estações', component: StationsPage});
+        this.pages.push({ title: 'Perfil', component: UserPage });
+        this.pages.push({ title: 'Estações', component: StationsPage });
+        this.pages.push({ title: 'Adicionar créditos', component: AddCreditsPage })
 
-        if(this.isLoggedin()) {
+        if (this.isLoggedin())
             this.rootPage = UserPage;
-        }
         else
             this.rootPage = HomePage;
     }

@@ -2,13 +2,14 @@
 import { Component } from '@angular/core';
 import { AuthService } from "../../services/authservice";
 import { HomePage } from '../home/home';
+import { UserCreds } from "../../models/usercreds";
 
 @Component({
     templateUrl: './signuppage.html',
     providers: [AuthService]
 })
 export class SignupPage {
-    newcreds: { username: string; password: string; email: string; };
+    newcreds: UserCreds;
     nav: NavController;
     authservice: AuthService;
 
@@ -20,7 +21,7 @@ export class SignupPage {
         this.authservice = authservice;
         this.nav = navcontroller;
 
-        this.newcreds = {username: '', password: '', email: ''};
+        this.newcreds = new UserCreds('', '', '');
     }
 
     register(newcreds) {

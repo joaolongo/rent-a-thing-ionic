@@ -1,15 +1,20 @@
 ﻿<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
+  <ion-navbar>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>
-            Meus dados
-        </ion-title>
-    </ion-navbar>
+    <ion-title>
+      Meus dados
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <h2></h2>
-    <button (click)="logout()" ion-button>Logout</button>
+  <h2></h2>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button (click)="logout()" color="danger" ion-button full>Logout</button>
+  </ion-toolbar>
+</ion-footer>

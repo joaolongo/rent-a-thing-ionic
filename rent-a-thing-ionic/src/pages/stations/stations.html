@@ -22,13 +22,14 @@
 
         <ion-item>
           <ion-icon name="pin" item-start large></ion-icon>
-          <p>{{station.address}}</p>
+          <a>{{station.address}}</a>
         </ion-item>
 
         <ion-item>
+
           <span item-left>3 min</span>
           <span item-left>(260 m)</span>
-          <button ion-button icon-left clear item-end (click)="select(p.id)">
+          <button ion-button icon-left clear item-end (click)="select(station.id)">
             <ion-icon name="card"></ion-icon>
             Alugar
           </button>

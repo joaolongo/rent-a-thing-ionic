@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { StationService } from '../../services/stationservice'
 import { StationPage } from '../station/station'
+import { Station } from "../../models/station";
+import { StationMapper } from "../../mappers/stationmapper";
 
 @Component({
     templateUrl: './stations.html',
     providers: [StationService]
 })
 export class StationsPage {
-    stations: any;
+    stations: Array<Station>;
     nav: NavController;
-        stationservice: StationService;
+    stationservice: StationService;
 
     static get parameters() {
         return [[StationService], [NavController]];
@@ -21,11 +23,12 @@ export class StationsPage {
         this.nav = navcontroller;
 
         stationservice.getStations().then(data => {
-            this.stations = data;
+            this.stations = StationMapper.mapMany(data);
         });
     }
 
-    select(id){
+    select(id) {
         this.nav.push(StationPage, {stationId: id});
+        //this.nav.setRoot(StationPage, { stationId: id });
     }
 }

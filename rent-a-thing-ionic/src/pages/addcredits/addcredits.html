@@ -1,0 +1,35 @@
+﻿<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Adicionar Créditos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+   <!--CONSTRUIR TELA DE PAGAMENTO-->
+  <ion-label>{{state}}</ion-label>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button (click)="back()" [disabled]="state == 1" ion-button icon-start full>
+            <ion-icon name="arrow-round-back"></ion-icon>
+            <ion-label>Voltar</ion-label>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button (click)="next()" [disabled]="state == 3" ion-button icon-end full>
+            <ion-label>Próximo</ion-label>
+            <ion-icon name="arrow-round-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
