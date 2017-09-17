@@ -1,4 +1,5 @@
-﻿import { Tenant } from "../models/tenant";
+import { Tenant } from "../models/tenant";
+import { ProfileMapper } from "./profilemapper";
 
 export class TenantMapper{
     static mapMany(objects) {
@@ -15,6 +16,9 @@ export class TenantMapper{
         if (tenant == null)
             return null;
 
-        return new Tenant(tenant.url, tenant.username, tenant.email);
+        if (tenant.profile == null)
+            return new Tenant(tenant.url, tenant.username, tenant.email, tenant.first_name, tenant.last_name, null);
+
+        return new Tenant(tenant.url, tenant.username, tenant.email, tenant.first_name, tenant.last_name, ProfileMapper.map(tenant.profile));
     }
 }

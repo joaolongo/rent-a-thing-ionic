@@ -1,4 +1,4 @@
-﻿import { StationService } from "../../services/stationservice";
+import { StationService } from "../../services/stationservice";
 import { NavController, NavParams } from "ionic-angular";
 import { Station } from "../../models/station";
 import { StationMapper } from "../../mappers/stationmapper";
@@ -26,5 +26,9 @@ export class StationPage implements OnInit {
         this.stationService = stationService;
         this.nav = navcontroller;
         this.navParams = navParams;
+    }
+
+    rent() {
+
     }
 }

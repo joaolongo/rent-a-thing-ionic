@@ -1,23 +1,32 @@
-﻿import { NavController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
 import { HomePage } from '../home/home';
 import { AuthService } from "../../services/authservice";
+import { WalletService } from "../../services/walletservice";
 
 @Component({
     templateUrl: './userpage.html',
-    providers: [AuthService]
+    providers: [AuthService, WalletService]
 })
-export class UserPage {
-
+export class UserPage implements OnInit {
+    walletService: WalletService;    
     service: AuthService;
     nav: NavController;
-
-    static get parameters() {
-        return [[AuthService], [NavController]];
+    balance: number;
+    
+    ngOnInit(): void {
+        this.walletService.getUserBalance().then(data => {
+            this.balance = data['balance'];
+        });
     }
 
-    constructor(dataservice: AuthService, navcontroller: NavController) {
-        this.service = dataservice;
+    static get parameters() {
+        return [[AuthService], [WalletService], [NavController]];
+    }
+
+    constructor(service: AuthService, walletService: WalletService, navcontroller: NavController) {
+        this.service = service;
+        this.walletService = walletService;
         this.nav = navcontroller;
     }
 

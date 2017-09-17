@@ -1,7 +1,8 @@
-﻿import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Station } from "../models/station";
 import { RentalObject } from "../models/rentalobject";
+import { EndpointHelper } from "../helpers/endpointhelper";
 
 @Injectable()
 export class StationService {
@@ -18,7 +19,7 @@ export class StationService {
         this.http = http;
         this.apikey = window.localStorage.getItem('api-key');
 
-        this.api_url = 'http://localhost:8087/';
+        this.api_url = EndpointHelper.getEndpoint();
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');

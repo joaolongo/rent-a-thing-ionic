@@ -1,4 +1,4 @@
-﻿import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -6,7 +6,9 @@ import { UserPage } from '../pages/userpage/userpage';
 import { SignupPage } from '../pages/signuppage/signuppage';
 import { StationsPage } from '../pages/stations/stations';
 import { StationPage } from '../pages/station/station';
-import { AddCreditsPage } from "../pages/addcredits/addcredits";
+import { TransactionPage } from "../pages/transaction/transaction";
+import { InputMaskModule } from "../directives/ng2-inputmask/input-mask.module";
+import { Mask } from "../directives/mask/mask";
 
 @NgModule({
     declarations: [
@@ -16,7 +18,8 @@ import { AddCreditsPage } from "../pages/addcredits/addcredits";
         SignupPage,
         StationsPage,
         StationPage,
-        AddCreditsPage
+        TransactionPage,
+        Mask
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -29,7 +32,7 @@ import { AddCreditsPage } from "../pages/addcredits/addcredits";
         SignupPage,
         StationsPage,
         StationPage,
-        AddCreditsPage
+        TransactionPage
     ],
     providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

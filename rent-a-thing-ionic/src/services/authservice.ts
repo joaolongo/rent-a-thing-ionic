@@ -1,6 +1,7 @@
-﻿import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { UserCreds } from "../models/usercreds";
+import { EndpointHelper } from "../helpers/endpointhelper";
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,8 @@ export class AuthService {
         this.http = http;
         this.isLoggedin = false;
 
-        this.api_url = 'http://localhost:8087/';
+
+        this.api_url = EndpointHelper.getEndpoint();
     }
 
     login(user: UserCreds) {
@@ -27,7 +29,11 @@ export class AuthService {
         return new Promise(resolve => {
             this.http.post(this.api_url + 'account/login/', creds, { headers: headers }).subscribe(data => {
                 if (data.ok) {
-                    window.localStorage.setItem('api-key', data.json().token);
+
+                    let userData = data.json();
+
+                    window.localStorage.setItem('api-key', userData.token);
+                    window.localStorage.setItem('user-id', userData.id);
                     this.isLoggedin = true;
                 } resolve(this.isLoggedin);
             }, err => {
@@ -54,5 +60,21 @@ export class AuthService {
     logout() {
         this.isLoggedin = false;
         window.localStorage.clear();
+    }
+
+    getUserData() {
+        return new Promise(resolve => {
+
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Authorization', 'Token ' + window.localStorage.getItem('api-key'));
+
+            this.http.get(this.api_url + 'core/api/users/' + window.localStorage.getItem('user-id') + '/', { headers: headers })
+                .subscribe(data => {
+                    if (data.ok)
+                        resolve(data.json());
+                }, err => {
+                });
+        });
     }
 }

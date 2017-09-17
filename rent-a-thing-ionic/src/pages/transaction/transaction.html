@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Comprar Créditos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ng-container *ngIf="dataLoaded">
+    <ng-container *ngIf="state == 1">
+      <ion-card>
+        <ion-card-header>
+          Meu carrinho
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <!--[(ngModel)]="usercreds.username"-->
+            <ion-label stacked>Quantidade de créditos</ion-label>
+            <ion-input [(ngModel)]="totalCredits" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Preço por crédito</ion-label>
+            <ion-input type="text" disabled value="{{ creditValue | currency:'BRL':true }}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Total em Reais</ion-label>
+            <ion-input typeof="text" disabled value="{{ creditValue * totalCredits | currency:'BRL':true }}"></ion-input>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+    <ng-container *ngIf="state == 2">
+      <ion-card>
+        <ion-card-header>
+          Meus dados
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-label>CPF:</ion-label>
+              </ion-col>
+              <ion-col col-11>
+                <ion-input type="text" [readonly]="true" value="{{ userData.profile.cpf}}"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label>Nome:</ion-label>
+              </ion-col>
+              <ion-col col-11>
+                <ion-input type="text" [readonly]="true" value="{{ userData.firstName + ' ' + userData.lastName }}"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label>E-mail:</ion-label>
+              </ion-col>
+              <ion-col col-11>
+                <ion-input type="text" [readonly]="true" value="{{ userData.email }}"></ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+    <ng-container *ngIf="state == 3">
+      <ion-card>
+        <ion-card-header>
+          Forma de Pagamento
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-label stacked>Número do Cartão</ion-label>
+            <ion-input placeholder="0000 0000 0000 0000" pattern="\d*" mask="**** **** **** ****" [(ngModel)]="creditCard.cc" ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Data de validade</ion-label>
+            <ion-input placeholder="01 0001" pattern="\d*" mask="** ****" [(ngModel)]="creditCard.validDate"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Nome completo</ion-label>
+            <ion-input placeholder="João das Neves" [(ngModel)]="creditCard.fullName"
+                       (ngModelChange)="creditCard.fullName = $event.toLocaleUpperCase()">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Código de segurança</ion-label>
+            <ion-input placeholder="1234" mask="****" [(ngModel)]="creditCard.cvv"></ion-input>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      </ng-container>
+    </ng-container>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button (click)="back()" [disabled]="state == 1" ion-button icon-start full>
+            <ion-icon name="arrow-round-back"></ion-icon>
+            <ion-label>Voltar</ion-label>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button (click)="next()" ion-button icon-end full>
+            <ion-label>{{ getNextValue() }}</ion-label>
+            <ion-icon name="arrow-round-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

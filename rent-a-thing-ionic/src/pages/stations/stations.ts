@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { StationService } from '../../services/stationservice'
 import { StationPage } from '../station/station'
@@ -29,6 +29,5 @@ export class StationsPage {
 
     select(id) {
         this.nav.push(StationPage, {stationId: id});
-        //this.nav.setRoot(StationPage, { stationId: id });
     }
 }

@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
@@ -6,7 +6,7 @@ import { HomePage } from '../pages/home/home';
 import { UserPage } from '../pages/userpage/userpage';
 import { StationsPage } from '../pages/stations/stations';
 import { AuthService } from "../services/authservice";
-import { AddCreditsPage } from "../pages/addcredits/addcredits";
+import { TransactionPage } from "../pages/transaction/transaction";
 
 
 @Component({
@@ -28,7 +28,7 @@ export class MyApp {
 
         this.pages.push({ title: 'Perfil', component: UserPage });
         this.pages.push({ title: 'Estações', component: StationsPage });
-        this.pages.push({ title: 'Adicionar créditos', component: AddCreditsPage })
+        this.pages.push({ title: 'Comprar créditos', component: TransactionPage })
 
         if (this.isLoggedin())
             this.rootPage = UserPage;
@@ -50,7 +50,7 @@ export class MyApp {
     }
 
     isLoggedin(): boolean {
-        return window.localStorage.getItem('api-key') !== null;
+        return window.localStorage.getItem('api-key') !== null && window.localStorage.getItem('user-id') !== null;
     }
 
     logout() {
