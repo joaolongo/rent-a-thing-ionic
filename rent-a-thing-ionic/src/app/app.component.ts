@@ -7,6 +7,7 @@ import { UserPage } from '../pages/userpage/userpage';
 import { StationsPage } from '../pages/stations/stations';
 import { AuthService } from "../services/authservice";
 import { TransactionPage } from "../pages/transaction/transaction";
+import { MyRentalPage } from "../pages/myrentalpage/myrentalpage";
 
 
 @Component({
@@ -14,6 +15,12 @@ import { TransactionPage } from "../pages/transaction/transaction";
     providers: [AuthService]
 })
 export class MyApp {
+    hasActiveRental: boolean;
+
+    public CONST_TITULO_PERFIL: string = "Perfil";
+    public CONST_TITULO_ESTACOES: string = "Estações";
+    public CONST_TITULO_MEU_ALUGUEL: string = "Meu Aluguel";
+    public CONST_TITULO_COMPRAR_CREDITOS: string = "Comprar créditos";
 
     @ViewChild(Nav) nav: Nav;
 
@@ -25,11 +32,14 @@ export class MyApp {
     constructor(public platform: Platform, authservice: AuthService) {
         this.initializeApp();
         this.authservice = authservice;
-
+        
         this.pages.push({ title: 'Perfil', component: UserPage });
         this.pages.push({ title: 'Estações', component: StationsPage });
-        this.pages.push({ title: 'Comprar créditos', component: TransactionPage })
+        this.pages.push({ title: 'Comprar créditos', component: TransactionPage });
+        this.pages.push({ title: 'Meu Aluguel', component: MyRentalPage });
 
+        this.refreshMenu();
+        
         if (this.isLoggedin())
             this.rootPage = UserPage;
         else
@@ -45,6 +55,42 @@ export class MyApp {
         });
     }
 
+    refreshMenu() {
+
+        this.authservice.hasActiveRental().then(data => {
+            this.hasActiveRental = <boolean>data;
+        });
+    }
+
+    //private _canShow: string;
+
+    //get canShow(): boolean {
+    //    return this._validDate;
+    //}
+
+    canShow(title: string):boolean {
+        switch (title)
+        {
+            case this.CONST_TITULO_ESTACOES:
+                if (this.hasActiveRental)
+                    return false;
+                else
+                    return true;
+            case this.CONST_TITULO_MEU_ALUGUEL:
+                if (this.hasActiveRental)
+                    return true;
+                else
+                    return false;
+            case this.CONST_TITULO_COMPRAR_CREDITOS:
+                if (this.hasActiveRental)
+                    return false;
+                else
+                    return true;
+            default:
+                return false;
+        }
+    }
+
     openPage(page) {
         this.nav.setRoot(page);
     }
@@ -52,7 +98,7 @@ export class MyApp {
     isLoggedin(): boolean {
         return window.localStorage.getItem('api-key') !== null && window.localStorage.getItem('user-id') !== null;
     }
-
+    
     logout() {
         this.authservice.logout();
         this.openPage(HomePage);

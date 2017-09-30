@@ -1,4 +1,4 @@
-﻿import { NavController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { AuthService } from "../../services/authservice";
 import { HomePage } from '../home/home';
@@ -21,7 +21,7 @@ export class SignupPage {
         this.authservice = authservice;
         this.nav = navcontroller;
 
-        this.newcreds = new UserCreds('', '', '');
+        this.newcreds = new UserCreds('', '', '', '');
     }
 
     register(newcreds) {

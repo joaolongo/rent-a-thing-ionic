@@ -57,6 +57,38 @@ export class AuthService {
         });
     }
 
+    hasActiveRental() {
+        return new Promise(resolve => {
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Authorization', 'Token ' + window.localStorage.getItem('api-key'));
+
+            this.http.get(this.api_url + 'server/api/rentals/' + window.localStorage.getItem('user-id') + '/', { headers: headers })
+                .subscribe(data => {
+                    if (data.ok)
+                        resolve(true);
+                }, err => {
+                    resolve(false);
+                });
+        });
+    }
+
+    getRentalData() {
+        return new Promise(resolve => {
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Authorization', 'Token ' + window.localStorage.getItem('api-key'));
+
+            this.http.get(this.api_url + 'server/api/rentals/' + window.localStorage.getItem('user-id') + '/', { headers: headers })
+                .subscribe(data => {
+                    if (data.ok)
+                        resolve(data.json());
+                }, err => {
+
+                });
+        });
+    }
+
     logout() {
         this.isLoggedin = false;
         window.localStorage.clear();

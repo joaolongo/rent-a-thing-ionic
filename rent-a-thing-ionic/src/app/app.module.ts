@@ -9,6 +9,7 @@ import { StationPage } from '../pages/station/station';
 import { TransactionPage } from "../pages/transaction/transaction";
 import { InputMaskModule } from "../directives/ng2-inputmask/input-mask.module";
 import { Mask } from "../directives/mask/mask";
+import { MyRentalPage } from "../pages/myrentalpage/myrentalpage";
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { Mask } from "../directives/mask/mask";
         StationsPage,
         StationPage,
         TransactionPage,
+        MyRentalPage,
         Mask
     ],
     imports: [
@@ -32,7 +34,8 @@ import { Mask } from "../directives/mask/mask";
         SignupPage,
         StationsPage,
         StationPage,
-        TransactionPage
+        TransactionPage,
+        MyRentalPage
     ],
     providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

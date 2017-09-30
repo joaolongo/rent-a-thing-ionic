@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthService } from "../../services/authservice";
 import { UserPage } from '../userpage/userpage'
@@ -22,7 +22,7 @@ export class HomePage {
         this.authservice = authservice;
         this.nav = navcontroller;
 
-        this.usercreds = new UserCreds('','','');
+        this.usercreds = new UserCreds('','','', '');
     }
 
     login(usercreds) {

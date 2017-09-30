@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomePage } from '../home/home';
 import { AuthService } from "../../services/authservice";
 import { WalletService } from "../../services/walletservice";
+import { StopWatchService } from "../../services/stopwatchservice";
 
 @Component({
     templateUrl: './userpage.html',
@@ -16,7 +17,7 @@ export class UserPage implements OnInit {
     
     ngOnInit(): void {
         this.walletService.getUserBalance().then(data => {
-            this.balance = data['balance'];
+            this.balance = data['balance'] == null || data['balance'] == undefined ? 0 : data['balance'];
         });
     }
 

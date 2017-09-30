@@ -3,12 +3,14 @@ import { NavController, NavParams } from "ionic-angular";
 import { Station } from "../../models/station";
 import { StationMapper } from "../../mappers/stationmapper";
 import { Component, OnInit } from "@angular/core";
+import { RentalObject } from "../../models/rentalobject";
 
 @Component({
     templateUrl: './station.html',
     providers: [StationService]
 })
 export class StationPage implements OnInit {
+    selectedObject: RentalObject;
     navParams: NavParams;
     nav: NavController;
     stationService: StationService;
@@ -28,7 +30,11 @@ export class StationPage implements OnInit {
         this.navParams = navParams;
     }
 
-    rent() {
+    setObject(objectIndex: string) {
+        this.selectedObject = this.station.rental_objects[objectIndex];
+    }
 
+    rent() {
+        let aaa = 1 + 1;
     }
 }
