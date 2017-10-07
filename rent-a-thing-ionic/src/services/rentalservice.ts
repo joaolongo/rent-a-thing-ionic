@@ -26,7 +26,37 @@ export class RentalService {
         this.headers.append('Authorization', 'Token ' + this.apikey);
     }
 
-    createRental(rentalObject: RentalObject) {
+    createRental(rentalObject: RentalObject, station_id: number) {
+        let rental: { id: string, station_id: number, is_return: boolean, rental_cost: number };
 
+        rental = { id: rentalObject.id, is_return: false, station_id: station_id, rental_cost: 0 };
+
+        return new Promise(resolve => {
+            this.http.put(this.api_url + 'server/api/rental_objects/' + rentalObject.id + '/', JSON.stringify(rental), { headers: this.headers })
+                .subscribe(data => {
+                    if (data.ok) {
+                        resolve(true);
+                    }
+                }, err => {
+                    resolve(false);
+                });
+        });
+    }
+
+    endRental(rentalObjectId: string, station_id: number, rental_cost: number) {
+        let rental: { id: string, station_id: number, is_return: boolean, rental_cost: number };
+
+        rental = { id: rentalObjectId, is_return: true, station_id: station_id, rental_cost: rental_cost };
+
+        return new Promise(resolve => {
+            this.http.put(this.api_url + 'server/api/rental_objects/' + rentalObjectId + '/', JSON.stringify(rental), { headers: this.headers })
+                .subscribe(data => {
+                    if (data.ok) {
+                        resolve(true);
+                    }
+                }, err => {
+                    resolve(false);
+                });
+        });
     }
 }

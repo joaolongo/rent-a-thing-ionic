@@ -6,6 +6,10 @@ import { StationService } from "../../services/stationservice";
 import { Station } from "../../models/station";
 import { StationMapper } from "../../mappers/stationmapper";
 import { RentalTimeHelper } from "../../helpers/rentaltimehelper";
+import { StationsPage } from "../stations/stations";
+import { RentalService } from "../../services/rentalservice";
+import { TransactionService } from "../../services/transactionservice";
+import { UserPage } from "../userpage/userpage";
 
 /*
   Generated class for the myrentalpage page.
@@ -15,9 +19,12 @@ import { RentalTimeHelper } from "../../helpers/rentaltimehelper";
 */
 @Component({
     templateUrl: 'myrentalpage.html',
-    providers: [[AuthService], [StationService]]
+    providers: [[AuthService], [StationService], [RentalService], [TransactionService]]
 })
 export class MyRentalPage {
+    transactionService: TransactionService;
+    rentalService: RentalService;
+    nav: NavController;
     station: Station;
     stationLoaded: boolean = false;
     stationService: StationService;
@@ -26,19 +33,29 @@ export class MyRentalPage {
     authService: AuthService;
     watchService: StopWatchService;
 
-    constructor(navCtrl: NavController, navParams: NavParams, authService: AuthService, stationService: StationService) {
+    constructor(navCtrl: NavController, navParams: NavParams, authService: AuthService, stationService: StationService, rentalService: RentalService, transactionService: TransactionService) {
         this.authService = authService;
         this.stationService = stationService;
-        
-        this.authService.getRentalData().then(data => {
+        this.rentalService = rentalService;
+        this.transactionService = transactionService;
+        this.nav = navCtrl;
 
-            let rentalDate = new Date((<any>data).rental_date);
+        this.authService.hasActiveRental().then(data => {
+            if (<boolean>data) {
+                this.authService.getRentalData().then(data => {
 
-            let diff = RentalTimeHelper.getTimeDifference(rentalDate, new Date(Date.now()));
+                    let rentalDate = new Date((<any>data).rental_date);
 
-            this.watchService = StopWatchService.createInstanceAndStart(diff[0], diff[1] - 3, diff[2], diff[3]);
+                    let diff = RentalTimeHelper.getTimeDifference(rentalDate, new Date(Date.now()));
 
-            this.hasFinishedLoading = true;
+                    this.watchService = StopWatchService.createInstanceAndStart(diff[0], diff[1] - 3, diff[2], diff[3]);
+
+                    this.hasFinishedLoading = true;
+                });
+            }
+            else {
+                this.nav.setRoot(StationsPage);
+            }
         });
     }
 
@@ -58,6 +75,17 @@ export class MyRentalPage {
     }
 
     return() {
-
+        this.authService.getRentalData().then(data => {
+            this.transactionService.getRentalPrice().then(price => {
+                this.rentalService.endRental((
+                    <any>data).rented_object.id,
+                    this.returnStationId,
+                    ((this.watchService.days + 1) * <number>price))
+                    .then(result => {
+                        this.nav.setRoot(UserPage);
+                });
+            });
+            
+        });
     }
 }

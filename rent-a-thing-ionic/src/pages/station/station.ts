@@ -4,12 +4,15 @@ import { Station } from "../../models/station";
 import { StationMapper } from "../../mappers/stationmapper";
 import { Component, OnInit } from "@angular/core";
 import { RentalObject } from "../../models/rentalobject";
+import { RentalService } from "../../services/rentalservice";
+import { MyRentalPage } from "../myrentalpage/myrentalpage";
 
 @Component({
     templateUrl: './station.html',
-    providers: [StationService]
+    providers: [[StationService], [RentalService]]
 })
 export class StationPage implements OnInit {
+    rentalService: RentalService;
     selectedObject: RentalObject;
     navParams: NavParams;
     nav: NavController;
@@ -24,10 +27,11 @@ export class StationPage implements OnInit {
         })
     }
 
-    constructor(stationService: StationService, navcontroller: NavController, navParams: NavParams) {
+    constructor(stationService: StationService, navcontroller: NavController, navParams: NavParams, rentalService: RentalService) {
         this.stationService = stationService;
         this.nav = navcontroller;
         this.navParams = navParams;
+        this.rentalService = rentalService;
     }
 
     setObject(objectIndex: string) {
@@ -35,6 +39,8 @@ export class StationPage implements OnInit {
     }
 
     rent() {
-        let aaa = 1 + 1;
+        this.rentalService.createRental(this.selectedObject, this.station.id).then(data => {
+            this.nav.setRoot(MyRentalPage);
+        });
     }
 }
