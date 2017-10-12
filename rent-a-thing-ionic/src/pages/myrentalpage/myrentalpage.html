@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Meu Aluguel</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ng-container *ngIf="hasFinishedLoading">
+    <h3> &nbsp; Seu aluguel ocorreu a: </h3>
+    <h1 text-center>
+      <ion-icon name='alarm' is-active="false"></ion-icon>
+      {{ watchService.time }}
+    </h1>
+
+    <h4> &nbsp; Ao final do seu aluguel, debitaremos: </h4>
+    <h1 text-center>
+      {{(watchService.days + 1) * 2}} créditos
+    </h1>
+
+    <ion-item>
+      <ion-label>Estação de devolução</ion-label>
+      <ion-input [(ngModel)]="stationId" type="number" (input)="setReturnStationCode($event.target.value)"></ion-input>
+    </ion-item>
+
+    <br />
+
+    <button ion-button full (click)="searchStation()">Procurar estação</button>
+
+    <ng-container *ngIf="stationLoaded">
+      <ion-card>
+        <ion-card-header>
+          Estação selecionada
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-label>Descrição:</ion-label>
+              </ion-col>
+              <ion-col col-11>
+                <ion-input type="text" [readonly]="true" value="{{ station.description }}"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label>Endereço:</ion-label>
+              </ion-col>
+              <ion-col col-11>
+                <ion-input type="text" [readonly]="true" value="{{ station.address }}"></ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button (click)="return()" color="secondary" [disabled]="!stationLoaded" ion-button full>Devolver</button>
+  </ion-toolbar>
+</ion-footer>

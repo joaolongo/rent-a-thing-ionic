@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Meus dados
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <h3> &nbsp; &nbsp;Você tem: </h3>
+  <h1 text-center>{{ balance }} créditos</h1>
+
+  <ion-buttons end>
+    <button ion-button clear icon-start end [disabled]="1==1">
+      <ion-icon name='filing' is-active="false"></ion-icon> &nbsp;
+      Historico de pedidos
+    </button>
+  </ion-buttons>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button (click)="logout()" color="danger" ion-button full>Logout</button>
+  </ion-toolbar>
+</ion-footer>

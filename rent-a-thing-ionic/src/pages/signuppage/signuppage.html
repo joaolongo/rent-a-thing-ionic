@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cadastre-se</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="signup">
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Apelido</ion-label>
+      <ion-input [(ngModel)]="newcreds.username" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="newcreds.email" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>CPF</ion-label>
+      <ion-input [(ngModel)]="newcreds.profile.cpf" type="text" pattern="\d*" mask="***.***.***-**" maxlength="14" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Senha</ion-label>
+      <ion-input [(ngModel)]="newcreds.password" type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <button (click)="register(newcreds)" ion-button full>Confirmar</button>
+</ion-content>
